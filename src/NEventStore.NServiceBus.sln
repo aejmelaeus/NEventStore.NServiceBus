@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dispatcher", "Dispatcher\Di
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Unit", "Tests.Unit\Tests.Unit.csproj", "{15FAC9F4-6519-4C03-96F0-F5F4157A36FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Unit.Messages", "Tests.Unit.Messages\Tests.Unit.Messages.csproj", "{70BD629E-4D02-4A0D-BF73-5B9AF3A5B6C4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Messages", "Tests.Unit.Messages\Tests.Messages.csproj", "{70BD629E-4D02-4A0D-BF73-5B9AF3A5B6C4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Acceptance", "Tests.Acceptance\Tests.Acceptance.csproj", "{CE8688DA-F25C-4E72-88C9-F728241572BF}"
 EndProject

@@ -1,4 +1,4 @@
-﻿namespace Tests.Unit.Messages
+﻿namespace Tests.Messages
 {
     public class EventBase
     {

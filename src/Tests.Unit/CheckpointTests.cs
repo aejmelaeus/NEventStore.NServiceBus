@@ -3,14 +3,21 @@ using NEventStore;
 using NSubstitute;
 using System.Linq;
 using NUnit.Framework;
-using Tests.Unit.Messages;
 using System.Collections.Generic;
+using Tests.Messages;
 
 namespace Tests.Unit
 {
     [TestFixture]
     public class CheckpointTests
     {
+        [Test]
+        public void TODOS()
+        {
+            // Check that the assembly is set
+            // Check that the milliseconds are set
+        }
+
         [Test]
         public void NewChecpointToken_WhenCheckpointContainsNoCommits_NewCheckpointTokenSameAsInitial()
         {

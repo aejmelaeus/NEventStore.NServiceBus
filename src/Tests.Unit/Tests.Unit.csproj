@@ -70,9 +70,9 @@
       <Project>{88daa5cd-9f8f-468f-8470-1443e4fc9e7e}</Project>
       <Name>Dispatcher</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Tests.Unit.Messages\Tests.Unit.Messages.csproj">
+    <ProjectReference Include="..\Tests.Unit.Messages\Tests.Messages.csproj">
       <Project>{70BD629E-4D02-4A0D-BF73-5B9AF3A5B6C4}</Project>
-      <Name>Tests.Unit.Messages</Name>
+      <Name>Tests.Messages</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

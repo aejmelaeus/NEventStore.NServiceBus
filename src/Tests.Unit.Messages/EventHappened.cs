@@ -1,7 +1,9 @@
-﻿namespace Tests.Unit.Messages
+﻿using NServiceBus;
+
+namespace Tests.Messages
 {
-    public class EventHappened : EventBase
+    public class EventHappened : EventBase, IEvent
     {
-        // Not much here...
+        public string TheStuff { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Tests.Unit.Messages;
+﻿using Tests.Messages;
 
 namespace Tests.Unit
 {
