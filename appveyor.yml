@@ -16,7 +16,7 @@ before_test:
   - cmd: sqlcmd -S localhost,1433 -U sa -P Password12! -Q "CREATE DATABASE Acceptance" -d "master"
 test:
   assemblies:
-  - 'SequencedAggregate.Tests.Unit.dll'
+  - 'Tests.Unit.dll'
 services:
   - mssql2014
   - msmq
