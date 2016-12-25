@@ -17,3 +17,6 @@ before_test:
 test:
   assemblies:
   - 'SequencedAggregate.Tests.Unit.dll'
+services:
+  - mssql2014
+  - msmq
