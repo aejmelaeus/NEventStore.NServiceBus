@@ -2,6 +2,8 @@
 
 NServiceBus dispatcher for NEventStore. Uses a NServiceBus Saga to dispatch events from NEventStore.
 
+[![Build status](https://ci.appveyor.com/api/projects/status/vsgbkgyq7m7f9q7j/branch/master?svg=true)](https://ci.appveyor.com/project/aejmelaeus/neventstore-nservicebus/branch/master)
+
 ## The Saga
 
 The NServiceBus Saga implements a timeout to dispatch events from NEventStore. There can be one Saga per BucketId in NEventStore. It mimics the PollingClient example in NEventStore and uses the `CheckpointToken` to keep track of the process.
@@ -16,11 +18,11 @@ The `CheckpointToken` is stored in the Saga Data, so whenever the Endpoint resta
 
 ## Usage
 
-In a `Endpoint` of your choice, install the package from NuGet:
+In a Endpoint of your choice, install the package from NuGet:
 
     Install-Package NEventStore.NServiceBus
 
-Then head off to where you wire up your `Endpoint` to configure the `Dispatcher`:
+Then head off to where you wire up your Endpoint to configure the Dispatcher:
 
     var transport = endpointConfiguration.UseTransport<MsmqTransport>(); // Or whatever you prefer!
     endpointConfiguration.ConfigureDispatcherRouting(transport.Routing());
@@ -33,14 +35,14 @@ Then the actual start (it sends a command to the Saga):
 
 ### Almost done!
 
-The final step is to wire up the `IStoreEvents` instance in the container:
+The final step is to wire up the IStoreEvents instance in the container:
 
     IStoreEvents eventStore = GetEventStore();
 
     bldr.RegisterInstance(eventStore)
         .As<IStoreEvents>();
 
-This is how it could look like if you use `AutoFac`
+This is how it could look like if you use AutoFac
 
 ## Rough around the edges
 
