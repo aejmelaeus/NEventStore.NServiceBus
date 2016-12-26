@@ -10,7 +10,7 @@ namespace Tests.Acceptance.Endpoint.Handlers
     {
         public Task Handle(EventHappened message, IMessageHandlerContext context)
         {
-            File.AppendAllText(@"C:\temp\DispatcherAcceptanceTestResults.txt", message.TheStuff + Environment.NewLine);
+            File.AppendAllText(@"C:\projects\neventstore-nservicebus\DispatcherAcceptanceTestResults.txt", message.TheStuff + Environment.NewLine);
             return Task.FromResult(0);
         }
     }

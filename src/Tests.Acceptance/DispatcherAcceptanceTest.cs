@@ -43,7 +43,7 @@ namespace Tests.Acceptance
 
             // Act
             Thread.Sleep(20000);
-            var result = File.ReadAllText(@"C:\temp\DispatcherAcceptanceTestResults.txt");
+            var result = File.ReadAllText(@"C:\projects\neventstore-nservicebus\DispatcherAcceptanceTestResults.txt");
 
             // Assert
             Assert.That(result.Contains(theId));

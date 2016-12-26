@@ -23,7 +23,7 @@ namespace Tests.Acceptance.Endpoint
     {
         private readonly string _connectionString = Environment.GetEnvironmentVariables().Contains("APPVEYOR")
             ? @"Server=(local)\SQL2014;Initial Catalog=Dispatcher;User ID=sa;Password=Password12!"
-            : @"Data Source=SE-UTV28172; Initial Catalog=Dispatcher; Integrated Security=True";
+            : @"Data Source=<FIX>; Initial Catalog=Dispatcher; Integrated Security=True";
 
         private IEndpointInstance _endpoint;
 
