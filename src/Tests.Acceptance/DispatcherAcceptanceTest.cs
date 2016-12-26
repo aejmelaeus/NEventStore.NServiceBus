@@ -13,7 +13,7 @@ namespace Tests.Acceptance
     {
         private readonly string _connectionString = Environment.GetEnvironmentVariables().Contains("APPVEYOR")
             ? @"Server=(local)\SQL2014;Initial Catalog=Dispatcher;User ID=sa;Password=Password12!"
-            : @"Data Source=SE-UTV28172; Initial Catalog=Dispatcher; Integrated Security=True";
+            : @"Data Source=<FIX>; Initial Catalog=Dispatcher; Integrated Security=True";
 
         [Test]
         public void WhenCommittingEvents_EventsPublishedThroughDispatcher()
@@ -42,7 +42,7 @@ namespace Tests.Acceptance
             }
 
             // Act
-            Thread.Sleep(10000);
+            Thread.Sleep(20000);
             var result = File.ReadAllText(@"C:\temp\DispatcherAcceptanceTestResults.txt");
 
             // Assert
