@@ -6,5 +6,6 @@ namespace Dispatcher
     {
         public string CheckpointToken { get; set; }
         public string BucketId { get; set; }
+        public string MessageCatalogAssemblyName { get; set; }
     }
 }

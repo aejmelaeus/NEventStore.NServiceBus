@@ -28,11 +28,13 @@ namespace Dispatcher
             Data.HasStarted = true;
             Data.BucketId = message.BucketId;
             Data.TimeOutInMilliseconds = message.TimeoutInMilliseconds;
+            Data.MessageCatalogAssemblyName = message.MessageCatalogAssemblyName;
 
             return context.Send(new DispatchEvents
             {
                 BucketId = message.BucketId,
-                CheckpointToken = string.Empty
+                CheckpointToken = string.Empty,
+                MessageCatalogAssemblyName = Data.MessageCatalogAssemblyName
             });
         }
 
@@ -47,7 +49,8 @@ namespace Dispatcher
             return context.Send(new DispatchEvents
             {
                 BucketId = Data.BucketId,
-                CheckpointToken = Data.CheckpointToken
+                CheckpointToken = Data.CheckpointToken,
+                MessageCatalogAssemblyName = Data.MessageCatalogAssemblyName
             });
         }
     }

@@ -128,7 +128,8 @@ namespace Tests.Acceptance.Endpoint
             await _endpoint.SendLocal(new StartDispatching
             {
                 BucketId = "default",
-                TimeoutInMilliseconds = 1000
+                TimeoutInMilliseconds = 1000,
+                MessageCatalogAssemblyName = "Tests.Messages"
             }).ConfigureAwait(false);
         }
 

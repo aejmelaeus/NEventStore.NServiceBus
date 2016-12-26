@@ -16,13 +16,9 @@ namespace Dispatcher
 
         public Task Handle(DispatchEvents message, IMessageHandlerContext context)
         {
-            var bucketId = message.BucketId;
-            var checkpointToken = message.CheckpointToken;
-            var messageCatalogAssemblyName = ConfigurationManager.AppSettings["MessageCatalogAssemblyName"];
+            var commits = _persistStreams.GetFrom(message.BucketId, message.CheckpointToken);
 
-            var commits = _persistStreams.GetFrom(message.BucketId, checkpointToken);
-
-            var checkpoint = new Checkpoint(commits, checkpointToken, messageCatalogAssemblyName);
+            var checkpoint = new Checkpoint(commits, message.CheckpointToken, message.MessageCatalogAssemblyName);
 
             foreach (var eventToPublish in checkpoint.EventsToPublish)
             {
@@ -31,7 +27,7 @@ namespace Dispatcher
 
             return context.Send(new DispatchEventsComplete
             {
-                BucketId = bucketId,
+                BucketId = message.BucketId,
                 CheckpointToken = checkpoint.NewCheckpointToken
             });
         }

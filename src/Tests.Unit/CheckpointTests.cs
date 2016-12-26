@@ -12,13 +12,6 @@ namespace Tests.Unit
     public class CheckpointTests
     {
         [Test]
-        public void TODOS()
-        {
-            // Check that the assembly is set
-            // Check that the milliseconds are set
-        }
-
-        [Test]
         public void NewChecpointToken_WhenCheckpointContainsNoCommits_NewCheckpointTokenSameAsInitial()
         {
             // Arrange
@@ -65,7 +58,7 @@ namespace Tests.Unit
             var commit = Substitute.For<ICommit>();
             commit.Events.Returns(new[] { eventMessage });
             
-            var checkpoint = new Checkpoint(new [] { commit }, "SomeCheckpointToken", "tests.unit.Messages");
+            var checkpoint = new Checkpoint(new [] { commit }, "SomeCheckpointToken", "tests.Messages");
             
             // Act & Assert
             Assert.That(checkpoint.EventsToPublish.First(), Is.SameAs(theEvent));

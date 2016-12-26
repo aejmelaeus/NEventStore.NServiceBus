@@ -21,10 +21,20 @@ namespace Tests.Unit
         {
             const string bucketId = "default";
             const int milliseconds = 1000;
+            const string messageCatalogAssemblyName = "SomeAssembly";
 
             Test.Saga<DispatcherSaga>()
-                .ExpectSagaData<DispatcherSagaData>(dsd => dsd.HasStarted.Equals(true) && dsd.BucketId.Equals(bucketId) && dsd.TimeOutInMilliseconds.Equals(milliseconds))
-                .When((saga, context) => saga.Handle(new StartDispatching { BucketId = bucketId, TimeoutInMilliseconds = milliseconds }, context));
+                .ExpectSagaData<DispatcherSagaData>(dsd => 
+                    dsd.HasStarted.Equals(true) && 
+                    dsd.BucketId.Equals(bucketId) && 
+                    dsd.TimeOutInMilliseconds.Equals(milliseconds) &&
+                    dsd.MessageCatalogAssemblyName.Equals(messageCatalogAssemblyName))
+                .When((saga, context) => saga.Handle(new StartDispatching
+                {
+                    BucketId = bucketId,
+                    TimeoutInMilliseconds = milliseconds,
+                    MessageCatalogAssemblyName = messageCatalogAssemblyName
+                }, context));
         }
 
         [Test]
@@ -63,16 +73,22 @@ namespace Tests.Unit
             // Arrange
             const string checkpointToken = "SomeCheckpointToken";
             const string bucketId = "SomeBucketId";
+            const string messageCatalogAssemblyName = "SomeAssemblyName";
 
             var sagaData = new DispatcherSagaData
             {
                 CheckpointToken = checkpointToken,
-                BucketId = bucketId
+                BucketId = bucketId,
+                MessageCatalogAssemblyName = messageCatalogAssemblyName
             };
 
             // Act & Assert
             Test.Saga<DispatcherSaga>(sagaData)
-                .ExpectSend<DispatchEvents>(c => c.BucketId.Equals(bucketId) && c.CheckpointToken.Equals(checkpointToken))
+                .ExpectSend<DispatchEvents>(c => 
+                    c.BucketId.Equals(bucketId) && 
+                    c.CheckpointToken.Equals(checkpointToken) &&
+                    c.MessageCatalogAssemblyName.Equals(messageCatalogAssemblyName)
+                )
                 .WhenHandlingTimeout<DispatcherSagaTimeout>();
         }
     }

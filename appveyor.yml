@@ -14,9 +14,11 @@ build:
   verbosity: normal
 before_test:
   - cmd: sqlcmd -S localhost,1433 -U sa -P Password12! -Q "CREATE DATABASE Dispatcher" -d "master"
+  - cmd: src/Tests.Acceptance.Endpoint/bin/Release/Tests.Acceptance.Endpoint.exe
 test:
   assemblies:
   - 'Tests.Unit.dll'
+  - 'Tests.Acceptance.dll'
 services:
   - mssql2014
   - msmq
