@@ -1,20 +1,16 @@
 using System;
+using Autofac;
+using Dispatcher;
 using NServiceBus;
+using NEventStore;
+using Tests.Messages;
 using NServiceBus.Logging;
 using System.ComponentModel;
 using System.ServiceProcess;
-using System.Threading;
 using System.Threading.Tasks;
-using Autofac;
-using Dispatcher;
-using NEventStore;
-using NEventStore.Persistence;
-using NEventStore.Persistence.Sql.SqlDialects;
-using NServiceBus.Features;
 using NServiceBus.Persistence;
-using NServiceBus.Persistence.Legacy;
-using Tests.Messages;
 using IContainer = Autofac.IContainer;
+using NEventStore.Persistence.Sql.SqlDialects;
 
 namespace Tests.Acceptance.Endpoint
 {
@@ -25,7 +21,7 @@ namespace Tests.Acceptance.Endpoint
             ? @"Server=(local)\SQL2014;Initial Catalog=Dispatcher;User ID=sa;Password=Password12!"
             : @"Data Source=<FIX>; Initial Catalog=Dispatcher; Integrated Security=True";
 
-        private IEndpointInstance _endpoint;
+        private IEndpointInstance _endpointInstance;
 
         private static readonly ILog Logger = LogManager.GetLogger<ProgramService>();
 
@@ -63,6 +59,9 @@ namespace Tests.Acceptance.Endpoint
 
                 var endpointConfiguration = new EndpointConfiguration("Tests.Acceptance.Endpoint");
 
+                var transport = endpointConfiguration.UseTransport<MsmqTransport>();
+                endpointConfiguration.ConfigureDispatcherRouting(transport.Routing());
+
                 endpointConfiguration.UseSerialization<JsonSerializer>();
                 endpointConfiguration.AutoSubscribe();
                 endpointConfiguration.SendFailedMessagesTo("error");
@@ -71,20 +70,18 @@ namespace Tests.Acceptance.Endpoint
                 endpointConfiguration.UsePersistence<NHibernatePersistence>();
                 endpointConfiguration.EnableInstallers();
                 endpointConfiguration.UseContainer<AutofacBuilder>(c => c.ExistingLifetimeScope(container));
+                
 
-                // TODO - move this to Dispatcher
-                var transport = endpointConfiguration.UseTransport<MsmqTransport>();
-                transport.Routing().RouteToEndpoint(typeof(StartDispatching), "Tests.Acceptance.Endpoint");
-                transport.Routing().RouteToEndpoint(typeof(DispatchEvents), "Tests.Acceptance.Endpoint");
-                transport.Routing().RouteToEndpoint(typeof(DispatchEventsComplete), "Tests.Acceptance.Endpoint");
                 transport.Routing().RegisterPublisher(typeof(EventHappened), "Tests.Acceptance.Endpoint");
 
                 var persistence = endpointConfiguration.UsePersistence<NHibernatePersistence>();
                 persistence.ConnectionString(_connectionString);
 
-                _endpoint = await NServiceBus.Endpoint.Start(endpointConfiguration).ConfigureAwait(false);
+                _endpointInstance = await NServiceBus.Endpoint.Start(endpointConfiguration).ConfigureAwait(false);
 
-                await StartDispatching();
+                var pollingIntervalMilliseconds = 1000;
+                var messageCatalog = typeof (EventBase).Assembly;
+                _endpointInstance.StartDispatcher(pollingIntervalMilliseconds, messageCatalog);
             }
             catch (Exception exception)
             {
@@ -97,20 +94,17 @@ namespace Tests.Acceptance.Endpoint
         {
             var bldr = new ContainerBuilder();
 
-            var eventStore = GetEventSource();
+            IStoreEvents eventStore = GetEventStore();
 
             bldr.RegisterInstance(eventStore)
                 .As<IStoreEvents>();
-
-            bldr.RegisterInstance(eventStore.Advanced)
-                .As<IPersistStreams>();
 
             var container = bldr.Build();
 
             return container;
         }
 
-        private IStoreEvents GetEventSource()
+        private IStoreEvents GetEventStore()
         {
             return Wireup
                 .Init()
@@ -123,16 +117,6 @@ namespace Tests.Acceptance.Endpoint
                 .Build();
         }
 
-        private async Task StartDispatching()
-        {
-            await _endpoint.SendLocal(new StartDispatching
-            {
-                BucketId = "default",
-                TimeoutInMilliseconds = 1000,
-                MessageCatalogAssemblyName = "Tests.Messages"
-            }).ConfigureAwait(false);
-        }
-
         private static Task OnCriticalError(ICriticalErrorContext context)
         {
             var fatalMessage = $"The following critical error was encountered:\n{context.Error}\nProcess is shutting down.";
@@ -143,7 +127,7 @@ namespace Tests.Acceptance.Endpoint
 
         protected override void OnStop()
         {
-            _endpoint?.Stop().GetAwaiter().GetResult();
+            _endpointInstance?.Stop().GetAwaiter().GetResult();
         }
     }
 }

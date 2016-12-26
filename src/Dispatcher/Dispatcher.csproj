@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Checkpoint.cs" />
+    <Compile Include="DispatcherBootstrapper.cs" />
     <Compile Include="StartDispatching.cs" />
     <Compile Include="DispatcherSaga.cs" />
     <Compile Include="DispatcherSagaData.cs" />

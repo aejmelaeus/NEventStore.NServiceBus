@@ -1,6 +1,7 @@
 using NServiceBus;
 using System.Configuration;
 using System.Threading.Tasks;
+using NEventStore;
 using NEventStore.Persistence;
 
 namespace Dispatcher
@@ -9,9 +10,9 @@ namespace Dispatcher
     {
         private readonly IPersistStreams _persistStreams;
 
-        public DispatchEventsHandler(IPersistStreams persistStreams)
+        public DispatchEventsHandler(IStoreEvents storeEvents)
         {
-            _persistStreams = persistStreams;
+            _persistStreams = storeEvents.Advanced;
         }
 
         public Task Handle(DispatchEvents message, IMessageHandlerContext context)

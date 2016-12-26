@@ -15,6 +15,10 @@ namespace Tests.Acceptance
             ? @"Server=(local)\SQL2014;Initial Catalog=Dispatcher;User ID=sa;Password=Password12!"
             : @"Data Source=<FIX>; Initial Catalog=Dispatcher; Integrated Security=True";
 
+        private readonly string _filePath = Environment.GetEnvironmentVariables().Contains("APPVEYOR")
+            ? @"C:\projects\neventstore-nservicebus\DispatcherAcceptanceTestResults.txt"
+            : @"C:\temp\DispatcherAcceptanceTestResults.txt";
+
         [Test]
         public void WhenCommittingEvents_EventsPublishedThroughDispatcher()
         {
@@ -43,7 +47,7 @@ namespace Tests.Acceptance
 
             // Act
             Thread.Sleep(20000);
-            var result = File.ReadAllText(@"C:\projects\neventstore-nservicebus\DispatcherAcceptanceTestResults.txt");
+            var result = File.ReadAllText(_filePath);
 
             // Assert
             Assert.That(result.Contains(theId));
