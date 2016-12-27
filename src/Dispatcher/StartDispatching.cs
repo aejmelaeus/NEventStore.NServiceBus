@@ -1,6 +1,6 @@
 ﻿using NServiceBus;
 
-namespace Dispatcher
+namespace NEventStore.NServiceBus
 {
     public class StartDispatching : ICommand
     {

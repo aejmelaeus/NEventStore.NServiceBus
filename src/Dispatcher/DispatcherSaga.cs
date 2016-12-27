@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using NServiceBus;
 
-namespace Dispatcher
+namespace NEventStore.NServiceBus
 {
     public class DispatcherSaga : Saga<DispatcherSagaData>,
         IAmStartedByMessages<StartDispatching>,

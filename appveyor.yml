@@ -19,8 +19,17 @@ test:
   assemblies:
   - 'Tests.Unit.dll'
   - 'Tests.Acceptance.dll'
+after_build: nuget pack Dispatcher\Dispatcher.csproj -Version %APPVEYOR_BUILD_VERSION%
+artifacts:
+  - path: '**\NEventStore.NServiceBus*.nupkg'
 services:
   - mssql2014
   - msmq
+deploy:
+  provider: NuGet
+  api_key:
+    secure: Cn+HK5O+bcpCL3ByqeQyfeysjGapaXDtEsbYgWOtR39oCx3TbVFa8eaKY5jyFS1W
+  skip_symbols: false
+  artifact: /.*\.nupkg/
 on_finish:
   - ps: Stop-Process -Id $EndpointProcess.Id

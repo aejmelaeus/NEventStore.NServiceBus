@@ -1,10 +1,8 @@
-using NServiceBus;
-using System.Configuration;
 using System.Threading.Tasks;
-using NEventStore;
 using NEventStore.Persistence;
+using NServiceBus;
 
-namespace Dispatcher
+namespace NEventStore.NServiceBus
 {
     public class DispatchEventsHandler : IHandleMessages<DispatchEvents>
     {

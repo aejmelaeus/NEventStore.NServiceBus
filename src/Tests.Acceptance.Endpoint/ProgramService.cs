@@ -1,6 +1,5 @@
 using System;
 using Autofac;
-using Dispatcher;
 using NServiceBus;
 using NEventStore;
 using Tests.Messages;
@@ -8,6 +7,7 @@ using NServiceBus.Logging;
 using System.ComponentModel;
 using System.ServiceProcess;
 using System.Threading.Tasks;
+using NEventStore.NServiceBus;
 using NServiceBus.Persistence;
 using IContainer = Autofac.IContainer;
 using NEventStore.Persistence.Sql.SqlDialects;

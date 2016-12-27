@@ -1,4 +1,4 @@
-﻿using Dispatcher;
+﻿using NEventStore.NServiceBus;
 using NUnit.Framework;
 using NServiceBus.Testing;
 

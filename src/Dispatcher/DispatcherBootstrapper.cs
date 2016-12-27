@@ -1,11 +1,8 @@
-﻿using NServiceBus;
-using System.Reflection;
-using NServiceBus.Routing;
-using System.Collections.Generic;
+﻿using System.Reflection;
+using NServiceBus;
 using NServiceBus.Configuration.AdvanceExtensibility;
-using NServiceBus.Transport;
 
-namespace Dispatcher
+namespace NEventStore.NServiceBus
 {
     public static class DispatcherBootstrapper
     {

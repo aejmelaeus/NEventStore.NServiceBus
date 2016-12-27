@@ -1,9 +1,9 @@
-﻿using Dispatcher;
-using NEventStore;
+﻿using NEventStore;
 using NSubstitute;
 using System.Linq;
 using NUnit.Framework;
 using System.Collections.Generic;
+using NEventStore.NServiceBus;
 using Tests.Messages;
 
 namespace Tests.Unit

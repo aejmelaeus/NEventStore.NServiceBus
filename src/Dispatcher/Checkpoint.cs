@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using NEventStore;
 
-namespace Dispatcher
+namespace NEventStore.NServiceBus
 {
     internal class Checkpoint
     {

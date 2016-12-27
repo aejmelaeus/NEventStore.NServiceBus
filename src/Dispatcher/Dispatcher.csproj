@@ -7,8 +7,8 @@
     <ProjectGuid>{88DAA5CD-9F8F-468F-8470-1443E4FC9E7E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Dispatcher</RootNamespace>
-    <AssemblyName>Dispatcher</AssemblyName>
+    <RootNamespace>NEventStore.NServiceBus</RootNamespace>
+    <AssemblyName>NEventStore.NServiceBus</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

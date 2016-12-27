@@ -1,4 +1,4 @@
-﻿namespace Dispatcher
+﻿namespace NEventStore.NServiceBus
 {
     public class DispatcherSagaTimeout
     {
